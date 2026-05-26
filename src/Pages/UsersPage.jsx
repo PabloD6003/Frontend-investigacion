@@ -1,26 +1,22 @@
-import UsersList from "../Components/UsersList";
-import Login from "../Components/Login";
-import AddUserButton from "../Components/AddUserButton";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useContext } from "react";
-import { AuthContext } from "../Context/AuthContext.jsx";
+import { useContext } from 'react'
+import UsersList from '../Components/UsersList'
+import AddUserButton from '../Components/AddUserButton'
+import Login from '../Components/Login'
+import { AuthContext } from '../Context/AuthContext.jsx'
 
 const UsersPage = () => {
-    const queryClient = new QueryClient();
-      
-    const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
 
+  if (user) {
     return (
-        <QueryClientProvider client={queryClient}>
-            { user ?             
-             <div className="p-4">
-                <AddUserButton/>                
-                <UsersList />
-            </div>
-             : <Login/>
-            }
-        </QueryClientProvider>
-    );
+      <div className="p-4">
+        <AddUserButton />
+        <UsersList />
+      </div>
+    )
+  }
+
+  return <Login />
 }
 
-export default UsersPage;
+export default UsersPage

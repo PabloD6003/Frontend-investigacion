@@ -1,14 +1,16 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { login } from '../Services/AuthService'
 
-export  function useLogin() {
+export function useLogin() {
+  const queryClient = useQueryClient()
 
-
-    const login = (email, password) => {
-        // Fake login check
-        if (email === "admin" && password === "1234") {        
-            return true;
-        }
-            return false;
-    };
-
-    return { login  };
+  return useMutation({
+    mutationFn: login,
+    onSuccess: (token) => {
+      queryClient.setQueryData(['authToken'], token)
+    },
+    onError: (error) => {
+      console.error(error)
+    },
+  })
 }

@@ -1,9 +1,11 @@
 
 
-import RootLayout from  "./Components/RootLayout";
-import HomePage from "./Pages/HomePage";
-import UsersPage from  "./Pages/UsersPage";
-import LoginPage from "./Pages/LoginPage";
+import RootLayout from './Components/RootLayout'
+import HomePage from './Pages/HomePage'
+import UsersPage from './Pages/UsersPage'
+import LoginPage from './Pages/LoginPage'
+import AdminPage from './Pages/AdminPage'
+import PrivateRoute from './Components/PrivateRoute'
 
 import {
      createRootRoute,
@@ -17,27 +19,33 @@ const rootRoute = createRootRoute({
 
 const homeRoute = createRoute({
     getParentRoute: () => rootRoute,
-    path: "/",
+    path: '/',
     component: HomePage,
-}); 
-
-const usersRoute = createRoute({
-    getParentRoute: () => rootRoute,
-    path: "/users",
-    component: UsersPage,
-}); 
+})
 
 const loginRoute = createRoute({
     getParentRoute: () => rootRoute,
-    path: "/login",
+    path: '/login',
     component: LoginPage,
-}); 
+})
 
-rootRoute.addChildren([
-    homeRoute,
-    usersRoute,
-    loginRoute
-]);
+const usersRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/users',
+    component: UsersPage,
+})
+
+const adminRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/admin',
+    component: () => (
+        <PrivateRoute>
+            <AdminPage />
+        </PrivateRoute>
+    ),
+})
+
+rootRoute.addChildren([homeRoute, loginRoute, usersRoute, adminRoute])
 
 
 const router = createRouter({
