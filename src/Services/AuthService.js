@@ -2,7 +2,7 @@ import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
 
 export const client = axios.create({
-  baseURL: 'https://localhost:7098',
+  baseURL: 'http://inv.runasp.net',
 })
 
 export function extractToken(data) {
